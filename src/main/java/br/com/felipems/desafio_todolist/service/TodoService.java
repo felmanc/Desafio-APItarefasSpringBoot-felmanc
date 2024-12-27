@@ -38,12 +38,18 @@ public class TodoService {
     }
 
     public List<Todo> update(Todo todo) {
+        if(!todoRepository.existsById(todo.getId())){
+            throw new RuntimeException("Entity with id " + todo.getId() + " not found!");
+        }
         logger.info("Update Todos!");        
         todoRepository.save(todo);
         return list();
     }
 
     public List<Todo> delete(Long id) {
+        if(!todoRepository.existsById(id)){
+            throw new RuntimeException("Entity with id " + id + " not found!");
+        }
         todoRepository.deleteById(id);
         return list();
     }
